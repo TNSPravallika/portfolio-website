@@ -15,7 +15,8 @@ export default function Navbar() {
       </div>
       
       {/* Contact Button */}
-      <a href="mailto:navyapravallika14@gmail.com" className="hidden md:block bg-gray-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-blue-600 transition-colors shadow-lg">
+      <a href="/resume.pdf"
+download className="hidden md:block bg-gray-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-blue-600 transition-colors shadow-lg">
         Contact Me
       </a>
     </nav>

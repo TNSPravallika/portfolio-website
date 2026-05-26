@@ -1,181 +1,108 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
-import { db } from "@/app/lib/firebase";
-
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-}
-
-export default function ProjectsPage() {
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [projects, setProjects] = useState<Project[]>([]);
-
-  const [editId, setEditId] = useState("");
-
-  // Fetch projects
-  const fetchProjects = async () => {
-
-    const querySnapshot = await getDocs(
-      collection(db, "projects")
-    );
-
-    const data: Project[] = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as Omit<Project, "id">),
-    }));
-
-    setProjects(data);
-  };
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  // Add or Update Project
-  const handleSubmit = async () => {
-
-    try {
-
-      if (editId) {
-
-        await updateDoc(doc(db, "projects", editId), {
-          title,
-          description,
-        });
-
-        alert("Project Updated 🔥");
-
-        setEditId("");
-
-      } else {
-
-        await addDoc(collection(db, "projects"), {
-          title,
-          description,
-          createdAt: new Date(),
-        });
-
-        alert("Project Added 🔥");
-      }
-
-      setTitle("");
-      setDescription("");
-
-      fetchProjects();
-
-    } catch (error) {
-
-      console.log(error);
-      alert("Error");
-    }
-  };
-
-  // Delete
-  const handleDelete = async (id: string) => {
-
-    await deleteDoc(doc(db, "projects", id));
-
-    alert("Deleted");
-
-    fetchProjects();
-  };
-
-  // Edit
-  const handleEdit = (project: Project) => {
-
-    setTitle(project.title);
-    setDescription(project.description);
-
-    setEditId(project.id);
-  };
+export default function DashboardPage() {
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
 
-      <h1 className="text-4xl font-bold mb-10">
-        Project CMS
-      </h1>
+    <div className="min-h-screen bg-black text-white p-10">
 
-      <div className="max-w-2xl space-y-5 mb-12">
+      {/* Header */}
 
-        <input
-          type="text"
-          placeholder="Project Title"
-          className="w-full h-14 rounded-2xl bg-zinc-900 border border-zinc-800 px-5"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      <div className="flex items-center justify-between mb-10">
 
-        <textarea
-          placeholder="Project Description"
-          className="w-full h-40 rounded-2xl bg-zinc-900 border border-zinc-800 px-5 py-4"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        <div>
 
-        <button
-          onClick={handleSubmit}
-          className="bg-violet-600 hover:bg-violet-700 px-8 py-4 rounded-2xl font-semibold"
-        >
-          {editId ? "Update Project" : "Add Project"}
+          <h1 className="text-6xl font-bold">
+            Admin Dashboard
+          </h1>
+
+          <p className="text-zinc-400 mt-3 text-lg">
+            Manage your portfolio website
+          </p>
+
+        </div>
+
+        <button className="bg-red-500 hover:bg-red-600 transition px-8 py-4 rounded-2xl text-xl font-semibold">
+          Logout
         </button>
 
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      {/* Cards */}
 
-        {projects.map((project) => (
+      <div className="grid md:grid-cols-3 gap-8">
 
-          <div
-            key={project.id}
-            className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6"
-          >
-            <h2 className="text-2xl font-bold mb-3">
-              {project.title}
-            </h2>
+        {/* Projects */}
 
-            <p className="text-zinc-400 mb-5">
-              {project.description}
-            </p>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
 
-            <div className="flex gap-3">
+          <h2 className="text-4xl font-bold mb-4">
+            Projects
+          </h2>
 
-              <button
-                onClick={() => handleEdit(project)}
-                className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl"
-              >
-                Edit
-              </button>
+          <p className="text-zinc-400 mb-8 text-lg">
+            Upload and manage projects
+          </p>
 
-              <button
-                onClick={() => handleDelete(project.id)}
-                className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl"
-              >
-                Delete
-              </button>
+          <Link href="/dashboard/projects">
 
-            </div>
-          </div>
+            <button className="bg-violet-600 hover:bg-violet-700 transition px-8 py-4 rounded-2xl text-lg font-semibold">
+              Manage
+            </button>
 
-        ))}
+          </Link>
+
+        </div>
+
+        {/* Resume */}
+
+        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+
+          <h2 className="text-4xl font-bold mb-4">
+            Resume
+          </h2>
+
+          <p className="text-zinc-400 mb-8 text-lg">
+            Upload latest resume PDF
+          </p>
+
+          <Link href="/dashboard/resume">
+
+            <button className="bg-violet-600 hover:bg-violet-700 transition px-8 py-4 rounded-2xl text-lg font-semibold">
+              Upload
+            </button>
+
+          </Link>
+
+        </div>
+
+        {/* Messages */}
+
+        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+
+          <h2 className="text-4xl font-bold mb-4">
+            Messages
+          </h2>
+
+          <p className="text-zinc-400 mb-8 text-lg">
+            View contact form messages
+          </p>
+
+          <Link href="/dashboard/messages">
+
+            <button className="bg-violet-600 hover:bg-violet-700 transition px-8 py-4 rounded-2xl text-lg font-semibold">
+              Open
+            </button>
+
+          </Link>
+
+        </div>
 
       </div>
+
     </div>
+
   );
 }

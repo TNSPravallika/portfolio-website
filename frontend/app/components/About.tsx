@@ -41,8 +41,15 @@ export default function About() {
 
         {/* Download CV Button & Signature */}
         <div className="flex items-center gap-8 mt-2">
-          <a href="#" className="bg-yellow-400 text-black px-8 py-3.5 rounded-full font-bold hover:bg-yellow-500 transition shadow-lg flex items-center gap-2">
-            Download CV 
+         <a
+  href="/resume.pdf"
+  download
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-violet-600 hover:bg-violet-700 px-6 py-3 rounded-xl text-white"
+>
+  Download CV
+</a>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
           </a>
           {/* A styled signature text */}

@@ -200,7 +200,7 @@ function Navbar() {
 
         {/* CTA */}
         <a
-          href="mailto:navyapravallika14@gmail.com"
+         href="/resume.pdf"
           className="hidden md:inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-purple-500 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-md shadow-violet-200 hover:shadow-violet-300 hover:scale-105 active:scale-95 transition-all duration-200 btn-shimmer"
         >
           <span>Hire Me</span>
@@ -297,7 +297,7 @@ function HeroSection() {
           </p>
 
           <div className="flex flex-wrap gap-3 pt-1 animate-fade-up delay-400">
-            <a href="mailto:navyapravallika14@gmail.com"
+            <a href="/resume.pdf"
               className="inline-flex items-center gap-2.5 bg-gradient-to-r from-violet-600 to-purple-500 hover:from-violet-700 hover:to-purple-600 text-white font-bold px-7 py-3.5 rounded-full shadow-xl shadow-violet-300 hover:shadow-violet-400 hover:-translate-y-1 active:translate-y-0 transition-all duration-200 btn-shimmer text-sm">
               📄 Download Resume
             </a>
